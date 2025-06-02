@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediksi Harga Ikan PPN KARANGANTU</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
+            color: #003c58;
+            padding: 40px;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #01579b;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        form {
+            background-color: #ffffffcc;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        select, button {
+            font-size: 16px;
+            padding: 8px 12px;
+            margin-right: 15px;
+            border: 1px solid #00796b;
+            border-radius: 6px;
+        }
+
+        button {
+            background-color: #0288d1;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0277bd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background-color: #4fc3f7;
+            color: white;
+            padding: 12px;
+            text-align: center;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #e1f5fe;
+        }
+
+        .no-data {
+            font-style: italic;
+            color: #ff6f00;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🐟 Prediksi Harga Ikan PPN KARANGANTU</h1>
+
+    <form method="POST">
+        <label for="jenis_ikan">Pilih Jenis Ikan:</label>
+        <select name="jenis_ikan" id="jenis_ikan" required>
+            <option value="">-- Pilih Ikan --</option>
+            {% for ikan in nama_ikan %}
+                <option value="{{ ikan }}" {% if ikan == selected_ikan %}selected{% endif %}>{{ ikan }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="tahun">Pilih Tahun:</label>
+        <select name="tahun" id="tahun" required>
+            <option value="">-- Pilih Tahun --</option>
+            {% for tahun in tahun_list %}
+                <option value="{{ tahun }}" {% if tahun|string == selected_tahun %}selected{% endif %}>{{ tahun }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">🔍 Lihat Prediksi</button>
+    </form>
+
+    {% if predictions %}
+    <h2>📈 Hasil Prediksi</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Tahun</th>
+                <th>Jenis Ikan</th>
+                <th>Prediksi Harga (Rp/Kg)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in predictions %}
+            <tr>
+                <td>{{ row['Tahun'] }}</td>
+                <td>{{ row['Jenis_Ikan'] }}</td>
+                <td>{{ "{:,.0f}".format(row['harga']) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% elif selected_ikan and selected_tahun %}
+        <p class="no-data">⚠️ Tidak ada hasil untuk kombinasi ini.</p>
+    {% endif %}
+
+</body>
+</html>
